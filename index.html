@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>육류를 활용한 요리 — 동아리 미션</title>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Noto+Sans+KR:wght@300;400;500&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:    #f5efe3;
+  --ink:   #1a0f06;
+  --muted: #8a6e52;
+  --rule:  rgba(26,15,6,.1);
+  --c1:    #a82810; /* 페루 레드 */
+  --c1l:   #d4611a;
+  --c2:    #1a5c30; /* 멕시코 그린 */
+  --c2l:   #c08e18;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--ink); font-family: 'Noto Sans KR', sans-serif; font-weight: 300; overflow-x: hidden; }
+
+/* ══ COVER ══ */
+.cover {
+  min-height: 100vh;
+  background: #f0e8d8;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  padding: 3.5rem 4rem;
+  position: relative; overflow: hidden;
+}
+.cover-grain {
+  position: absolute; inset: 0; pointer-events: none;
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(160,130,90,.08) 40px),
+    repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(160,130,90,.08) 40px);
+}
+.cover-accent { display: none; }
+.cover-top {
+  position: relative; z-index: 1;
+  display: flex; justify-content: space-between; align-items: flex-start;
+  border-bottom: 2px solid #1a0e06;
+  padding-bottom: 1rem;
+}
+.cover-label {
+  font-family: "DM Mono", monospace;
+  font-size: .6rem; letter-spacing: .28em;
+  color: rgba(26,14,6,.4); text-transform: uppercase;
+}
+.cover-num {
+  font-family: "DM Mono", monospace;
+  font-size: .6rem; letter-spacing: .2em;
+  color: rgba(26,14,6,.35);
+}
+.cover-mid {
+  position: relative; z-index: 1;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 2rem 0;
+}
+.cover-small {
+  font-family: "DM Mono", monospace;
+  font-size: .6rem; letter-spacing: .3em;
+  color: rgba(26,14,6,.4); text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.cover-title {
+  font-family: "Nanum Myeongjo", serif;
+  font-size: clamp(3.2rem, 8vw, 7rem);
+  font-weight: 800; line-height: .95;
+  color: #1a0e06;
+  margin-bottom: .7rem;
+}
+.cover-author-inline {
+  font-family: "Nanum Myeongjo", serif;
+  font-size: 1.15rem; font-weight: 400;
+  color: rgba(26,14,6,.45);
+  margin-bottom: 3.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(26,14,6,.12);
+}
+.cover-recipes-big {
+  display: flex; flex-direction: column;
+}
+.crb-item {
+  display: grid;
+  grid-template-columns: 52px 1fr auto;
+  align-items: center;
+  gap: 1.8rem;
+  padding: 1.6rem 0;
+  border-bottom: 1px solid rgba(26,14,6,.1);
+}
+.crb-n {
+  font-family: "Nanum Myeongjo", serif;
+  font-size: 3rem; font-weight: 800; line-height: 1;
+  color: rgba(26,14,6,.12);
+}
+.crb-ko {
+  font-family: "Nanum Myeongjo", serif;
+  font-size: clamp(1.3rem, 3vw, 2rem);
+  font-weight: 700; color: #1a0e06; line-height: 1.1;
+}
+.crb-en {
+  font-family: "DM Mono", monospace;
+  font-size: .58rem; letter-spacing: .13em;
+  color: rgba(26,14,6,.32); margin-top: .28rem;
+}
+.crb-flag { font-size: 1.8rem; }
+.cover-bot {
+  position: relative; z-index: 1;
+  border-top: 2px solid #1a0e06;
+  padding-top: 1rem;
+  display: flex; justify-content: space-between; align-items: flex-end;
+  flex-wrap: wrap; gap: 1rem;
+}
+.cover-author {
+  font-family: "Nanum Myeongjo", serif;
+  font-size: .95rem; color: rgba(26,14,6,.45);
+}
+.cover-source {
+  font-family: "DM Mono", monospace;
+  font-size: .48rem; letter-spacing: .1em;
+  color: rgba(26,14,6,.28); max-width: 500px; text-align: right;
+  line-height: 1.9;
+}
+
+/* ══ PAGE BREAK BAND ══ */
+.page-band {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 2rem;
+  padding: 2.5rem 4rem;
+  border-top: 3px solid var(--ink);
+  border-bottom: 3px solid var(--ink);
+}
+.pb-line { height: 1px; background: var(--rule); }
+.pb-center {
+  text-align: center;
+  display: flex; flex-direction: column; align-items: center; gap: .4rem;
+}
+.pb-num {
+  font-family: 'Nanum Myeongjo', serif;
+  font-size: 3.5rem; font-weight: 800; line-height: 1;
+}
+.pb-ko {
+  font-family: 'Nanum Myeongjo', serif;
+  font-size: 1rem; font-weight: 700;
+}
+.pb-en {
+  font-family: 'DM Mono', monospace;
+  font-size: .55rem; letter-spacing: .18em; color: var(--muted);
+  text-transform: uppercase;
+}
+
+/* ══ RECIPE HERO ══ */
+.recipe-hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 500px;
+  border-bottom: 2px solid var(--ink);
+}
+@media(max-width:680px){ .recipe-hero { grid-template-columns:1fr; } }
+
+.rh-photo {
+  position: relative; overflow: hidden;
+  background: #1a0f06;
+}
+.rh-photo img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  filter: brightness(.88) saturate(1.05);
+}
+.rh-info {
+  padding: 3rem 3rem 2.5rem;
+  display: flex; flex-direction: column; justify-content: space-between;
+  border-left: 2px solid var(--ink);
+}
+@media(max-width:680px){ .rh-info { border-left:none; border-top:2px solid var(--ink); } }
+
+.rh-badge {
+  display: flex; align-items: center; gap: .6rem;
+  font-family: 'DM Mono', monospace;
+  font-size: .58rem; letter-spacing: .22em; text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+.rh-dot { width: 10px; height: 10px; flex-shrink: 0; }
+.rh-title {
+  font-family: 'Nanum Myeongjo', serif;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 800; line-height: .95;
+}
+.rh-en {
+  font-family: 'DM Mono', monospace;
+  font-style: italic; font-size: .78rem; letter-spacing: .1em;
+  margin-top: .8rem;
+}
+.rh-desc {
+  font-size: .84rem; line-height: 2; color: var(--muted);
+  margin-top: 1.2rem; font-weight: 300;
+}
+.rh-specs {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  border: 1px solid var(--rule);
+  margin-top: 2rem; gap: 1px; background: var(--rule);
+}
+.spec {
+  background: var(--bg); padding: .75rem .9rem;
+}
+.spec-k {
+  font-family: 'DM Mono', monospace;
+  font-size: .5rem; letter-spacing: .18em; color: var(--muted);
+  text-transform: uppercase; display: block; margin-bottom: .18rem;
+}
+.spec-v { font-size: .8rem; font-weight: 500; }
+
+/* ══ RECIPE BODY ══ */
+.recipe-body {
+  display: grid; grid-template-columns: 3fr 1fr;
+  border-bottom: 3px solid var(--ink);
+}
+@media(max-width:720px){ .recipe-body { grid-template-columns:1fr; } }
+
+.rb-main { padding: 3rem; border-right: 1px solid var(--rule); }
+@media(max-width:720px){ .rb-main { border-right:none; border-bottom:1px solid var(--rule); } }
+.rb-side { padding: 2.5rem 2rem; }
+
+/* section head */
+.sh {
+  font-family: 'Nanum Myeongjo', serif;
+  font-size: 1.1rem; font-weight: 800;
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: .3rem; margin-bottom: 1.4rem;
+  display: flex; align-items: baseline; justify-content: space-between;
+}
+.sh em {
+  font-family: 'DM Mono', monospace;
+  font-size: .52rem; letter-spacing: .2em;
+  color: var(--muted); font-style: normal; font-weight: 300;
+}
+
+/* pull quote */
+.pull {
+  font-family: 'Nanum Myeongjo', serif;
+  font-size: 1rem; font-style: italic; font-weight: 700;
+  border-left: 3px solid; padding-left: 1rem;
+  margin-bottom: 1.3rem; line-height: 1.65;
+}
+.body-p { font-size: .84rem; line-height: 2.2; color: #3a2010; }
+.body-p + .body-p { margin-top: .8rem; }
+
+/* source tag */
+.src {
+  font-family: 'DM Mono', monospace;
+  font-size: .55rem; letter-spacing: .1em; color: var(--muted);
+  margin-top: 1rem; line-height: 1.9;
+}
+
+/* facts */
+.facts {
+  display: grid; grid-template-columns: repeat(4,1fr);
+  border: 1px solid var(--rule); gap: 1px; background: var(--rule);
+  margin-top: 1.6rem;
+}
+@media(max-width:680px){ .facts { grid-template-columns:repeat(2,1fr); } }
+.fc { background: var(--bg); padding: .8rem 1rem; }
+.fc-k { font-family:'DM Mono',monospace; font-size:.5rem; letter-spacing:.18em; color:var(--muted); text-transform:uppercase; margin-bottom:.18rem; }
+.fc-v { font-size:.76rem; line-height:1.4; font-weight:500; }
+
+/* ingredients */
+.ig-grp { margin-bottom: 2rem; }
+.ig-lbl {
+  font-family: 'Nanum Myeongjo', serif;
+  font-size: .95rem; font-weight: 800;
+  letter-spacing: .02em;
+  margin-bottom: .7rem;
+  padding: .55rem 1rem;
+  display: flex; align-items: center; gap: .6rem;
+}
+.ig-row {
+  display: flex; gap: .8rem;
+  padding: .5rem 0; border-bottom: 1px solid var(--rule);
+  font-size: .8rem; align-items: baseline;
+}
+.ig-row:last-child { border-bottom: none; }
+.ig-qty { font-family:'DM Mono',monospace; font-size:.67rem; min-width:62px; flex-shrink:0; }
+.ig-nm { font-weight: 400; }
+.ig-alt { font-size:.67rem; font-style:italic; color:var(--muted); display:block; margin-top:.06rem; }
+
+/* timeline */
+.tl-row {
+  display: flex; gap: 1rem; padding: .5rem 0;
+  border-bottom: 1px solid var(--rule); font-size: .79rem;
+}
+.tl-row:last-child { border-bottom: none; }
+.tl-t { font-family:'DM Mono',monospace; font-size:.64rem; min-width:76px; flex-shrink:0; padding-top:.1rem; }
+
+/* steps */
+.step {
+  display: grid; grid-template-columns: 48px 1fr;
+  gap: 1.2rem; padding: 1.5rem 0; border-bottom: 1px solid var(--rule);
+}
+.step:last-child { border-bottom: none; }
+.step-l { display:flex; flex-direction:column; align-items:center; padding-top:.05rem; }
+.step-n { font-family:'Nanum Myeongjo',serif; font-size:2rem; font-weight:800; line-height:1; }
+.step-lbl { font-family:'DM Mono',monospace; font-size:.44rem; letter-spacing:.15em; color:var(--muted); text-transform:uppercase; margin-top:.05rem; }
+.step-line { width:1px; flex:1; background:var(--rule); margin-top:.3rem; min-height:14px; }
+.step-r {}
+.step-title { font-size:.9rem; font-weight:500; margin-bottom:.4rem; }
+.step-body { font-size:.81rem; line-height:2.1; color:#3a2010; }
+.step-tag {
+  display:inline-block; font-family:'DM Mono',monospace;
+  font-size:.52rem; letter-spacing:.1em;
+  border:1px solid; padding:.1rem .5rem;
+  margin-top:.5rem; text-transform:uppercase;
+}
+.key-tag {
+  display:inline-block; font-family:'DM Mono',monospace;
+  font-size:.52rem; letter-spacing:.1em;
+  padding:.1rem .5rem; margin-top:.5rem; margin-left:.3rem;
+  text-transform:uppercase; color:#f5efe3;
+}
+
+/* tip */
+.tip {
+  border-left: 4px solid; padding: 1.2rem 1.5rem; margin-top: 2rem;
+}
+.tip-lbl { font-family:'DM Mono',monospace; font-size:.54rem; letter-spacing:.2em; text-transform:uppercase; margin-bottom:.5rem; }
+.tip-body { font-size:.8rem; line-height:2.1; color:#3a2010; }
+
+/* sidebar */
+.sb { padding: 1.2rem 0; border-bottom: 1px solid var(--rule); }
+.sb:last-child { border-bottom: none; }
+.sb-ttl { font-family:'Nanum Myeongjo',serif; font-weight:800; font-size:.9rem; border-bottom:1px solid; padding-bottom:.2rem; margin-bottom:.8rem; }
+.sb-text { font-size:.72rem; line-height:2; color:#3a2010; }
+.sb-text strong { font-weight:500; }
+.buy { display:flex; gap:.6rem; padding:.4rem 0; border-bottom:1px dashed var(--rule); font-size:.72rem; line-height:1.5; }
+.buy:last-child { border-bottom:none; }
+.buy-i { flex-shrink:0; font-size:.88rem; }
+.buy-b { font-weight:500; display:block; font-size:.73rem; }
+.buy-s { color:var(--muted); font-size:.68rem; }
+
+/* heat bars */
+.heat-row { display:flex; align-items:center; gap:.6rem; font-size:.68rem; margin-bottom:.32rem; }
+.heat-track { flex:1; height:4px; background:var(--rule); }
+.heat-fill { height:100%; }
+
+/* serving box */
+.srv { padding:1.2rem 1.4rem; margin-top:1rem; }
+.srv-ttl { font-family:'DM Mono',monospace; font-size:.52rem; letter-spacing:.2em; text-transform:uppercase; margin-bottom:.8rem; }
+.srv-item { display:flex; gap:.5rem; padding:.28rem 0; border-bottom:1px solid rgba(245,239,227,.1); font-size:.73rem; color:rgba(245,239,227,.75); align-items:center; }
+.srv-item:last-child { border-bottom:none; }
+.srv-n { font-family:'Nanum Myeongjo',serif; font-size:.95rem; font-weight:800; opacity:.3; min-width:18px; }
+
+/* footer */
+.site-footer {
+  border-top: 3px solid var(--ink);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.2rem 3rem; flex-wrap: wrap; gap: .6rem;
+}
+.sf-l { font-family:'Nanum Myeongjo',serif; font-weight:800; font-size:1rem; }
+.sf-r { font-family:'DM Mono',monospace; font-size:.5rem; letter-spacing:.15em; color:var(--muted); text-transform:uppercase; max-width:500px; text-align:right; line-height:1.8; }
+</style>
+</head>
+<body>
+
+<!-- ████ COVER ████ -->
+<div class="cover">
+  <div class="cover-grain"></div>
+  <div class="cover-accent"></div>
+
+  <div class="cover-top">
+    <div class="cover-label">World Exotic Meat Cuisine · 동아리 미션</div>
+    <div class="cover-num">2026. 05. 23</div>
+  </div>
+
+  <div class="cover-mid">
+    <div class="cover-small">육류를 활용한 요리</div>
+    <div class="cover-title">이색 육류 요리</div>
+    <div class="cover-author-inline">김미랑</div>
+
+    <div class="cover-recipes-big">
+      <div class="crb-item">
+        <div class="crb-n">01</div>
+        <div class="crb-text">
+          <div class="crb-ko">쿠이 알 오르노</div>
+          <div class="crb-en">CUY AL HORNO · GUINEA PIG ROAST · PERU</div>
+        </div>
+        <div class="crb-flag">🐹🇵🇪</div>
+      </div>
+      <div class="crb-item">
+        <div class="crb-n">02</div>
+        <div class="crb-text">
+          <div class="crb-ko">바르바코아 데 레스</div>
+          <div class="crb-en">BARBACOA DE RES · BEEF CHEEK BBQ · MEXICO</div>
+        </div>
+        <div class="crb-flag">🐄🇲🇽</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cover-bot">
+    <div class="cover-author">김미랑</div>
+    <div class="cover-source">
+      출처: FAO (2009) Livestock in the Balance · Davidson (1999) Oxford Companion to Food<br>
+      CONACULTA (2000) Enciclopedia Gastronómica de México · Coe (1994) America's First Cuisines
+    </div>
+  </div>
+</div>
+
+
+<!-- ████ PAGE BAND 01 ████ -->
+<div class="page-band" style="color:var(--c1)">
+  <div class="pb-line"></div>
+  <div class="pb-center">
+    <div class="pb-num">01</div>
+    <div class="pb-ko">쿠이 알 오르노</div>
+    <div class="pb-en">Cuy al Horno · Peru · Cusco</div>
+  </div>
+  <div class="pb-line"></div>
+</div>
+
+
+<!-- ████ RECIPE 01 HERO ████ -->
+<div class="recipe-hero">
+  <div class="rh-photo">
+    <img
+      src="https://eatperu.com/wp-content/uploads/2020/08/cuy-chactado-fried-guinea-pig.jpg"
+      onerror="this.parentElement.style.background='#2a0e06';this.style.display='none'"
+      alt="쿠이 알 오르노">
+  </div>
+  <div class="rh-info">
+    <div>
+      <div class="rh-badge" style="color:var(--c1)">
+        <div class="rh-dot" style="background:var(--c1)"></div>
+        Recipe No.01 · Peru · Cusco
+      </div>
+      <div class="rh-title">쿠이 알<br>오르노</div>
+      <div class="rh-en" style="color:var(--c1l)">Cuy al Horno — Roasted Guinea Pig</div>
+      <p class="rh-desc">
+        잉카 문명 5,000년의 식탁 위에 오른 기니피그 통구이.<br>
+        쿠스코 대성당 최후의 만찬 벽화에도 등장하는<br>
+        안데스 고원의 정통 육류 요리.
+      </p>
+    </div>
+    <div class="rh-specs">
+      <div class="spec"><span class="spec-k">주재료</span><span class="spec-v">기니피그</span></div>
+      <div class="spec"><span class="spec-k">조리시간</span><span class="spec-v">2~3시간</span></div>
+      <div class="spec"><span class="spec-k">분량</span><span class="spec-v">2인분</span></div>
+      <div class="spec"><span class="spec-k">난이도</span><span class="spec-v">★★★☆☆</span></div>
+      <div class="spec"><span class="spec-k">조리방식</span><span class="spec-v">오븐 통구이</span></div>
+      <div class="spec"><span class="spec-k">출신지역</span><span class="spec-v">쿠스코, 페루</span></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- RECIPE 01 BODY -->
+<div class="recipe-body">
+<div class="rb-main">
+
+  <div class="sh">역사적 배경 <em>Historia</em></div>
+  <div class="pull" style="border-color:var(--c1);color:var(--c1)">"쿠스코 대성당 최후의 만찬 벽화 — 식탁 위에 기니피그가 있다"</div>
+  <p class="body-p">페루 쿠스코 대성당에는 1753년 제작된 유명한 <em>최후의 만찬</em> 그림이 걸려 있습니다. 이탈리아 원본과 달리 예수와 제자들의 식탁 한가운데에 기니피그 통구이가 놓여 있습니다. 스페인 화가가 현지 문화를 반영한 것으로, 쿠이(Cuy)의 문화적 위상을 단번에 보여줍니다.</p>
+  <p class="body-p">쿠이는 안데스 고원에서 약 3,000~5,000년 전 가축화된 동물로, 잉카제국 시절 왕족 연회와 종교 의식에 올랐습니다. 해발 3,500m 고원에서 작은 공간에 가족 분량의 단백질을 공급할 수 있는 거의 유일한 가축이었으며, 오늘날 페루에서는 연간 약 6,500만 마리가 소비됩니다.</p>
+  <div class="facts">
+    <div class="fc"><div class="fc-k">역사</div><div class="fc-v" style="color:var(--c1)">5,000년 안데스</div></div>
+    <div class="fc"><div class="fc-k">단백질</div><div class="fc-v">20.3g/100g</div></div>
+    <div class="fc"><div class="fc-k">맛</div><div class="fc-v">닭+토끼 중간</div></div>
+    <div class="fc"><div class="fc-k">연간 소비</div><div class="fc-v">6,500만 마리</div></div>
+  </div>
+  <p class="src">📎 출처: FAO (2009) <em>Livestock in the Balance</em> · Antúnez de Mayolo (1981) <em>La Nutrición en el Antiguo Perú</em> · Cushner (1980) <em>Lords of the Land</em></p>
+
+  <div style="margin-top:2.5rem"></div>
+  <div class="sh">재료 <em>2인분 기준</em></div>
+
+  <div class="ig-grp">
+    <div class="ig-lbl" style="background:rgba(168,40,16,.1);color:#7a1a08;border-left:3px solid #a82810;">🐹 고기</div>
+    <div class="ig-row"><span class="ig-qty" style="color:var(--c1)">2마리</span><div><div class="ig-nm">쿠이 (손질된 통마리)</div><span class="ig-alt">내장·털 제거. 냉동 수입품 가능 / 대체: 소형 토끼(코니)</span></div></div>
+  </div>
+  <div class="ig-grp">
+    <div class="ig-lbl" style="background:rgba(168,40,16,.1);color:#7a1a08;border-left:3px solid #a82810;">🌶 마리네이드</div>
+    <div class="ig-row"><span class="ig-qty" style="color:var(--c1)">6쪽</span><div><div class="ig-nm">마늘 (페이스트)</div></div></div>
+    <div class="ig-row"><span class="ig-qty" style="color:var(--c1)">1 tsp</span><div><div class="ig-nm">쿠민 가루</div></div></div>
+    <div class="ig-row"><span class="ig-qty" style="color:var(--c1)">2 tbsp</span><div><div class="ig-nm">아히 아마리요 페이스트</div><span class="ig-alt">없으면: 고추장 1tbsp + 다진 고수 1tbsp</span></div></div>
+    <div class="ig-row"><span class="ig-qty" style="color:var(--c1)">1 tsp</span><div><div class="ig-nm">건조 오레가노</div></div></div>
+    <div class="ig-row"><span class="ig-qty" style="color:var(--c1)">2개</span><div><div class="ig-nm">라임 (즙)</div><span class="ig-alt">레몬 대체 가능</span></div></div>
+    <div class="ig-row"><span class="ig-qty" style="color:var(--c1)">적량</span><div><div class="ig-nm">올리브오일 · 굵은 소금</div><span class="ig-alt">올리브오일은 마리네이드에 넣어 사용</span></div></div>
+  </div>
+  <div class="ig-grp">
+    <div class="ig-lbl" style="background:rgba(168,40,16,.1);color:#7a1a08;border-left:3px solid #a82810;">🍽 곁들임</div>
+    <div class="ig-row"><span class="ig-qty" style="color:var(--c1)">4개</span><div><div class="ig-nm">감자 (삶은 것)</div></div></div>
+    <div class="ig-row"><span class="ig-qty" style="color:var(--c1)">적량</span><div><div class="ig-nm">우아카타이 살사</div><span class="ig-alt">없으면: 민트+고수+라임</span></div></div>
+  </div>
+
+  <div style="margin-top:2.5rem"></div>
+  <div class="sh">조리 타임라인 <em>Timeline</em></div>
+  <div>
+    <div class="tl-row"><span class="tl-t" style="color:var(--c1)">전날 밤</span><span>마리네이드 만들어 쿠이에 바르고 냉장 8~12시간 재우기</span></div>
+    <div class="tl-row"><span class="tl-t" style="color:var(--c1)">0 min</span><span>냉장고에서 꺼내 30분 실온 방치 · 오븐 200℃ 예열</span></div>
+    <div class="tl-row"><span class="tl-t" style="color:var(--c1)">+30 min</span><span>로스팅 팬 세팅 · 오일 솔질 · 오븐 투입 (등 아래로)</span></div>
+    <div class="tl-row"><span class="tl-t" style="color:var(--c1)">+75 min</span><span>배스팅 1회 · 뒤집기 · 온도 220℃ 올리기</span></div>
+    <div class="tl-row"><span class="tl-t" style="color:var(--c1)">+95 min</span><span>완성 확인 (다리 관절 / 내부 72℃) · 포일 레스팅 10분</span></div>
+    <div class="tl-row"><span class="tl-t" style="color:var(--c1)">+105 min</span><span>감자·살사와 플레이팅 → 서빙</span></div>
+  </div>
+
+  <div style="margin-top:2.5rem"></div>
+  <div class="sh">조리 방법 <em>6단계</em></div>
+
+  <div class="step">
+    <div class="step-l"><div class="step-n" style="color:var(--c1)">01</div><div class="step-lbl">STEP</div><div class="step-line"></div></div>
+    <div class="step-r"><div class="step-title">마리네이드 만들기</div><p class="step-body">마늘 페이스트, 쿠민, 아히 아마리요, 오레가노, 라임즙, 소금, 올리브오일을 한 그릇에 넣고 고루 섞어야 한다.</p><span class="step-tag" style="color:var(--c1);border-color:rgba(168,40,16,.3)">5분</span></div>
+  </div>
+  <div class="step">
+    <div class="step-l"><div class="step-n" style="color:var(--c1)">02</div><div class="step-lbl">STEP</div><div class="step-line"></div></div>
+    <div class="step-r"><div class="step-title">재우기 (Marinating)</div><p class="step-body">쿠이 전체 표면과 복강 안쪽에 마리네이드를 손으로 문질러 발라야 한다. 껍질 아래에도 손가락을 넣어 직접 발라주어야 향이 깊이 밴다. 랩으로 감싸 냉장고에서 최소 4시간, 이상적으로는 하룻밤 재워야 한다.</p><span class="step-tag" style="color:var(--c1);border-color:rgba(168,40,16,.3)">4~12시간 냉장</span></div>
+  </div>
+  <div class="step">
+    <div class="step-l"><div class="step-n" style="color:var(--c1)">03</div><div class="step-lbl">STEP</div><div class="step-line"></div></div>
+    <div class="step-r"><div class="step-title">오븐 세팅</div><p class="step-body">오븐을 200℃로 예열한다. 냉장고에서 꺼낸 쿠이를 30분간 실온에 방치해야 한다. 로스팅 팬에 오일을 바르고 쿠이를 등이 아래로 향하게 올린 뒤 표면에 오일을 한 번 더 솔질한다.</p><span class="step-tag" style="color:var(--c1);border-color:rgba(168,40,16,.3)">200℃ 예열</span></div>
+  </div>
+  <div class="step">
+    <div class="step-l"><div class="step-n" style="color:var(--c1)">04</div><div class="step-lbl">STEP</div><div class="step-line"></div></div>
+    <div class="step-r"><div class="step-title">1차 굽기</div><p class="step-body">200℃에서 40~45분간 굽는다. 중간에 팬에 고인 육즙을 떠서 표면에 발라주는 배스팅을 1회 해야 한다. 껍질이 황갈색으로 익어가면 정상이다.</p><span class="step-tag" style="color:var(--c1);border-color:rgba(168,40,16,.3)">200℃ · 40~45분</span></div>
+  </div>
+  <div class="step">
+    <div class="step-l"><div class="step-n" style="color:var(--c1)">05</div><div class="step-lbl">STEP</div><div class="step-line"></div></div>
+    <div class="step-r"><div class="step-title">뒤집어 2차 굽기</div><p class="step-body">뒤집어 반대면이 위로 오게 한다. 온도를 220℃로 올려 15~20분 더 구워야 한다. 전체가 황금빛 갈색이 되고 다리 관절을 흔들었을 때 부드럽게 움직이면 완성이다. 내부 온도계로 72℃를 반드시 확인해야 한다.</p><span class="step-tag" style="color:var(--c1);border-color:rgba(168,40,16,.3)">220℃ · 15~20분</span><span class="key-tag" style="background:var(--c1)">⚡ 핵심</span></div>
+  </div>
+  <div class="step">
+    <div class="step-l"><div class="step-n" style="color:var(--c1)">06</div><div class="step-lbl">STEP</div></div>
+    <div class="step-r"><div class="step-title">레스팅 & 서빙</div><p class="step-body">포일로 느슨하게 덮어 10분간 레스팅해야 한다. 삶은 감자를 반으로 잘라 함께 플레이팅하고 우아카타이 살사를 곁들여 낸다. 전통 방식대로 통째로 손으로 뜯어 먹는다.</p><span class="step-tag" style="color:var(--c1);border-color:rgba(168,40,16,.3)">레스팅 10분</span></div>
+  </div>
+
+  <div class="tip" style="border-color:var(--c1l);background:rgba(212,97,26,.05)">
+    <div class="tip-lbl" style="color:var(--c1l)">🍴 셰프의 조리 팁</div>
+    <p class="tip-body">쿠이는 닭보다 살이 얇아 오래 구우면 금세 퍽퍽해진다. 내부 온도계로 <strong>허벅지 72℃</strong>를 반드시 확인해야 한다. 아히 아마리요가 없으면 <strong>고추장+고수+라임</strong>으로 대체한다. 쿠이를 구하기 어려울 경우 <strong>소형 토끼(코니)</strong>로 대체하면 가장 유사한 결과를 얻을 수 있다.</p>
+  </div>
+
+</div>
+<div class="rb-side">
+  <div class="sb">
+    <div class="sb-ttl" style="color:var(--c1);border-color:rgba(168,40,16,.25)">재료 구입처</div>
+    <div class="buy"><div class="buy-i">🐹</div><div><span class="buy-b">쿠이 (기니피그)</span><span class="buy-s">이태원 외국 식재료 마트 / 온라인 수입 식재료몰 "냉동 Cuy" 검색. 없으면 토끼로 대체.</span></div></div>
+    <div class="buy"><div class="buy-i">🌶</div><div><span class="buy-b">아히 아마리요 페이스트</span><span class="buy-s">쿠팡·마켓컬리 검색. 없으면 고추장+고수 대체.</span></div></div>
+    <div class="buy"><div class="buy-i">🌿</div><div><span class="buy-b">고수</span><span class="buy-s">대형마트 채소 코너 상시 판매.</span></div></div>
+  </div>
+  <div class="sb">
+    <div class="sb-ttl" style="color:var(--c1);border-color:rgba(168,40,16,.25)">온도 가이드</div>
+    <p class="sb-text"><strong>1차:</strong> 200℃ / 40~45분<br><strong>2차:</strong> 220℃ / 15~20분<br><strong>내부온도:</strong> 72℃ (허벅지)<br><strong>레스팅:</strong> 10분</p>
+  </div>
+  <div class="sb">
+    <div class="sb-ttl" style="color:var(--c1);border-color:rgba(168,40,16,.25)">보관 & 활용</div>
+    <p class="sb-text"><strong>냉장</strong> 2일 / <strong>냉동</strong> 2주<br><br>남은 쿠이:<br>· 뼈 제거 후 볶음밥<br>· 타코 속 재료<br>· 감자와 해시</p>
+  </div>
+  <div class="sb">
+    <div class="srv" style="background:#2a0e06">
+      <div class="srv-ttl" style="color:var(--c1l)">현지식 서빙 순서</div>
+      <div class="srv-item"><div class="srv-n">1</div>쿠이 통째로 플레이트에</div>
+      <div class="srv-item"><div class="srv-n">2</div>삶은 감자 (반으로)</div>
+      <div class="srv-item"><div class="srv-n">3</div>우아카타이 살사 곁들임</div>
+      <div class="srv-item"><div class="srv-n">4</div>손으로 뜯어 먹기 (전통)</div>
+      <div class="srv-item"><div class="srv-n">5</div>라임즙 짜서 마무리</div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+<!-- ████ PAGE BAND 02 ████ -->
+<div class="page-band" style="color:var(--c2);background:#f0ece0">
+  <div class="pb-line"></div>
+  <div class="pb-center">
+    <div class="pb-num">02</div>
+    <div class="pb-ko">바르바코아 데 레스</div>
+    <div class="pb-en">Barbacoa de Res · Mexico · Mexico City</div>
+  </div>
+  <div class="pb-line"></div>
+</div>
+
+
+<!-- RECIPE 02 HERO -->
+<div class="recipe-hero" style="background:#f0ece0">
+  <div class="rh-photo">
+    <img
+      src="https://www.isabeleats.com/wp-content/uploads/2019/02/beef-barbacoa-recipe-small-10.jpg"
+      onerror="this.parentElement.style.background='#0d2e18';this.style.display='none'"
+      alt="바르바코아 데 레스">
+  </div>
+  <div class="rh-info" style="background:#f0ece0">
+    <div>
+      <div class="rh-badge" style="color:var(--c2)">
+        <div class="rh-dot" style="background:var(--c2)"></div>
+        Recipe No.02 · Mexico · Mexico City
+      </div>
+      <div class="rh-title">바르바코아<br>데 레스</div>
+      <div class="rh-en" style="color:var(--c2l)">Barbacoa de Res — Beef Cheek BBQ</div>
+      <p class="rh-desc">
+        아즈텍 문명부터 이어진 땅속 화덕 조리법.<br>
+        소 볼살을 치폴레·안초 칠레로 버무려<br>
+        4시간 저온 브레이징한 멕시코 원조 BBQ.<br>
+        <em style="color:var(--c2);font-size:.78rem">이 요리가 전 세계 BBQ의 어원입니다.</em>
+      </p>
+    </div>
+    <div class="rh-specs">
+      <div class="spec"><span class="spec-k">주재료</span><span class="spec-v">소 볼살</span></div>
+      <div class="spec"><span class="spec-k">조리시간</span><span class="spec-v">5~6시간</span></div>
+      <div class="spec"><span class="spec-k">분량</span><span class="spec-v">4~6인분</span></div>
+      <div class="spec"><span class="spec-k">난이도</span><span class="spec-v">★★☆☆☆</span></div>
+      <div class="spec"><span class="spec-k">조리방식</span><span class="spec-v">오븐 브레이징</span></div>
+      <div class="spec"><span class="spec-k">출신지역</span><span class="spec-v">멕시코시티</span></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- RECIPE 02 BODY -->
+<div class="recipe-body" style="background:#f0ece0">
+<div class="rb-main">
+
+  <div class="sh">역사적 배경 <em>Historia</em></div>
+  <div class="pull" style="border-color:var(--c2);color:var(--c2)">"BBQ(바비큐)라는 단어, 멕시코 원주민에게서 왔습니다"</div>
+  <p class="body-p">바르바코아(Barbacoa)는 카리브해 타이노족 언어로 <em>"나무 격자 위에서 굽는다"</em>는 뜻입니다. 16세기 스페인 정복자들이 이 단어를 유럽으로 가져갔고, 영어 Barbecue(BBQ)의 직접적 어원이 되었습니다. 전 세계 모든 BBQ 문화의 씨앗이 멕시코에 있습니다.</p>
+  <p class="body-p">전통 방식은 땅을 1.5m 파고 숯을 깔아 화덕을 만든 뒤, 마게이(용설란) 잎으로 고기를 감싸 하룻밤 묻어 익히는 것입니다. 소 볼살은 소가 하루 종일 씹으며 발달한 근육으로 콜라겐이 풍부해, 장시간 저온 조리 시 결이 실처럼 풀리고 윤기 넘치는 육즙이 만들어집니다.</p>
+  <div class="facts">
+    <div class="fc"><div class="fc-k">어원</div><div class="fc-v" style="color:var(--c2)">BBQ의 기원</div></div>
+    <div class="fc"><div class="fc-k">전통방식</div><div class="fc-v">땅속 화덕 + 하룻밤</div></div>
+    <div class="fc"><div class="fc-k">핵심부위</div><div class="fc-v">소 볼살 (콜라겐↑)</div></div>
+    <div class="fc"><div class="fc-k">현지 먹는 법</div><div class="fc-v">일요일 아침 타코</div></div>
+  </div>
+  <p class="src">📎 출처: Davidson (1999) <em>Oxford Companion to Food</em> · CONACULTA (2000) <em>Enciclopedia Gastronómica de México</em> · Coe (1994) <em>America's First Cuisines</em></p>
+
+  <div style="margin-top:2.5rem"></div>
+  <div class="sh">재료 <em>4~6인분 기준</em></div>
+
+  <div class="ig-grp">
+    <div class="ig-lbl" style="background:rgba(26,92,48,.1);color:#0d4224;border-left:3px solid #1a5c30;">🥩 고기</div>
+    <div class="ig-row"><span class="ig-qty" style="color:var(--c2)">1.2 kg</span><div><div class="ig-nm">소 볼살 (Cachete / 뺨살)</div><span class="ig-alt">없으면: 우둔살·사태로 대체</span></div></div>
+    <div class="ig-row"><span class="ig-qty" style="color:var(--c2)">적량</span><div><div class="ig-nm">굵은 소금 · 검은 후추</div><span class="ig-alt">밑간용</span></div></div>
+  </div>
+  <div class="ig-grp">
+    <div class="ig-lbl" style="background:rgba(26,92,48,.1);color:#0d4224;border-left:3px solid #1a5c30;">🌶 칠레 소스</div>
+    <div class="ig-row"><span class="ig-qty" style="color:var(--c2)">3~4개</span><div><div class="ig-nm">치폴레 인 아도보 캔 (국물째)</div><span class="ig-alt">훈제 할라피뇨 통조림. 쿠팡 "치폴레 아도보" 검색</span></div></div>
+    <div class="ig-row"><span class="ig-qty" style="color:var(--c2)">3개</span><div><div class="ig-nm">안초 칠레 (건조)</div><span class="ig-alt">없으면: 훈제 파프리카 가루 2tbsp</span></div></div>
+    <div class="ig-row"><span class="ig-qty" style="color:var(--c2)">6쪽</span><div><div class="ig-nm">마늘</div></div></div>
+    <div class="ig-row"><span class="ig-qty" style="color:var(--c2)">1개</span><div><div class="ig-nm">양파 (반으로)</div></div></div>
+    <div class="ig-row"><span class="ig-qty" style="color:var(--c2)">2 tbsp</span><div><div class="ig-nm">애플 사이다 식초</div></div></div>
+    <div class="ig-row"><span class="ig-qty" style="color:var(--c2)">1 tsp</span><div><div class="ig-nm">쿠민 가루</div></div></div>
+    <div class="ig-row"><span class="ig-qty" style="color:var(--c2)">1 tsp</span><div><div class="ig-nm">건조 오레가노</div></div></div>
+    <div class="ig-row"><span class="ig-qty" style="color:var(--c2)">2장</span><div><div class="ig-nm">월계수잎</div></div></div>
+    <div class="ig-row"><span class="ig-qty" style="color:var(--c2)">200 ml</span><div><div class="ig-nm">쇠고기 육수 (또는 물)</div></div></div>
+  </div>
+  <div class="ig-grp">
+    <div class="ig-lbl" style="background:rgba(26,92,48,.1);color:#0d4224;border-left:3px solid #1a5c30;">🌮 타코 서빙</div>
+    <div class="ig-row"><span class="ig-qty" style="color:var(--c2)">8~10장</span><div><div class="ig-nm">옥수수 또는 밀 토르티야</div></div></div>
+    <div class="ig-row"><span class="ig-qty" style="color:var(--c2)">적량</span><div><div class="ig-nm">다진 양파 · 고수 · 살사 베르데</div></div></div>
+    <div class="ig-row"><span class="ig-qty" style="color:var(--c2)">2개</span><div><div class="ig-nm">라임</div><span class="ig-alt">서빙 직전 듬뿍 — 필수</span></div></div>
+  </div>
+
+  <div style="margin-top:2.5rem"></div>
+  <div class="sh">조리 타임라인 <em>Timeline</em></div>
+  <div>
+    <div class="tl-row"><span class="tl-t" style="color:var(--c2)">0 min</span><span>안초 칠레 뜨거운 물에 불리기</span></div>
+    <div class="tl-row"><span class="tl-t" style="color:var(--c2)">+20 min</span><span>칠레 소스 블렌딩 → 퓨레 완성</span></div>
+    <div class="tl-row"><span class="tl-t" style="color:var(--c2)">+25 min</span><span>소 볼살 밑간 → 강불 시어링 (사방 갈색)</span></div>
+    <div class="tl-row"><span class="tl-t" style="color:var(--c2)">+35 min</span><span>칠레 퓨레 붓기 → 뚜껑 닫고 160℃ 오븐 투입</span></div>
+    <div class="tl-row"><span class="tl-t" style="color:var(--c2)">+2h 35m</span><span>중간 체크 — 뒤집어 소스 재도포</span></div>
+    <div class="tl-row"><span class="tl-t" style="color:var(--c2)">+4h 35m</span><span>브레이징 완료 → 결 풀기 (Shredding)</span></div>
+    <div class="tl-row"><span class="tl-t" style="color:var(--c2)">+4h 45m</span><span>소스에 버무리기 → 토르티야 데워 서빙</span></div>
+  </div>
+
+  <div style="margin-top:2.5rem"></div>
+  <div class="sh">조리 방법 <em>6단계</em></div>
+
+  <div class="step">
+    <div class="step-l"><div class="step-n" style="color:var(--c2)">01</div><div class="step-lbl">STEP</div><div class="step-line"></div></div>
+    <div class="step-r"><div class="step-title">안초 칠레 불리기</div><p class="step-body">안초 칠레의 꼭지를 제거하고 세로로 갈라 씨를 털어낸다. 끓인 물에서 불을 끄고 칠레를 넣어 20분간 불려야 한다. 불린 칠레는 건져서 손으로 찢어 블렌더에 준비한다.</p><span class="step-tag" style="color:var(--c2);border-color:rgba(26,92,48,.3)">20분</span></div>
+  </div>
+  <div class="step">
+    <div class="step-l"><div class="step-n" style="color:var(--c2)">02</div><div class="step-lbl">STEP</div><div class="step-line"></div></div>
+    <div class="step-r"><div class="step-title">칠레 소스 블렌딩</div><p class="step-body">불린 칠레, 치폴레(국물째), 마늘, 양파, 식초, 쿠민, 오레가노, 육수 100ml를 블렌더에 넣고 완전히 갈아야 한다. 걸쭉한 붉은 퓨레가 되면 완성이다.</p><span class="step-tag" style="color:var(--c2);border-color:rgba(26,92,48,.3)">5분</span></div>
+  </div>
+  <div class="step">
+    <div class="step-l"><div class="step-n" style="color:var(--c2)">03</div><div class="step-lbl">STEP</div><div class="step-line"></div></div>
+    <div class="step-r"><div class="step-title">소 볼살 시어링</div><p class="step-body">볼살에 소금·후추로 밑간한다. 더치 오븐에 오일을 강불로 달궈 사방 각 면을 2~3분씩 짙은 갈색이 날 때까지 시어링해야 한다. 타는 것처럼 보여도 괜찮다 — 이것이 전부 풍미가 된다. 완성되면 건져서 따로 둔다.</p><span class="step-tag" style="color:var(--c2);border-color:rgba(26,92,48,.3)">8~10분 강불</span><span class="key-tag" style="background:var(--c2)">⚡ 절대 생략 금지</span></div>
+  </div>
+  <div class="step">
+    <div class="step-l"><div class="step-n" style="color:var(--c2)">04</div><div class="step-lbl">STEP</div><div class="step-line"></div></div>
+    <div class="step-r"><div class="step-title">소스 붓고 오븐 브레이징</div><p class="step-body">볼살을 냄비에 다시 넣고 칠레 퓨레를 고루 붓는다. 남은 육수 100ml와 월계수잎 2장을 넣어야 한다. 뚜껑을 꽉 닫고 160℃ 오븐에서 4~4.5시간 브레이징한다. 2시간째에 한 번 뒤집어 소스를 다시 발라주어야 한다.</p><span class="step-tag" style="color:var(--c2);border-color:rgba(26,92,48,.3)">160℃ · 4~4.5시간</span></div>
+  </div>
+  <div class="step">
+    <div class="step-l"><div class="step-n" style="color:var(--c2)">05</div><div class="step-lbl">STEP</div><div class="step-line"></div></div>
+    <div class="step-r"><div class="step-title">결 풀기 — Shredding</div><p class="step-body">포크 두 개로 결 방향으로 당겨 찢는다. 저항 없이 실처럼 풀리면 완성이다. 풀리지 않으면 30분 더 조리해야 한다. 월계수잎을 제거한 뒤 소스에 버무려 약불에서 5분 더 졸인다.</p><span class="step-tag" style="color:var(--c2);border-color:rgba(26,92,48,.3)">결 분리 확인</span><span class="key-tag" style="background:var(--c2)">⚡ 핵심</span></div>
+  </div>
+  <div class="step">
+    <div class="step-l"><div class="step-n" style="color:var(--c2)">06</div><div class="step-lbl">STEP</div></div>
+    <div class="step-r"><div class="step-title">타코 조립 & 서빙</div><p class="step-body">토르티야를 건식 팬에 앞뒤 30초씩 데운다. 현지 방식대로 2장 겹쳐 바르바코아를 듬뿍 올리고 다진 양파, 고수, 살사 베르데 순으로 올린다. 먹기 직전 라임을 듬뿍 짜서 마무리한다.</p><span class="step-tag" style="color:var(--c2);border-color:rgba(26,92,48,.3)">서빙 직전</span></div>
+  </div>
+
+  <div class="tip" style="border-color:var(--c2l);background:rgba(192,142,24,.05)">
+    <div class="tip-lbl" style="color:var(--c2l)">🍴 셰프의 조리 팁</div>
+    <p class="tip-body">시어링은 절대 건너뛰어서는 안 된다 — 풍미의 80%가 이 단계에서 나온다. 브레이징 중에는 뚜껑을 열지 않아야 한다. 결이 풀리지 않으면 시간이 부족한 것이므로 30분을 추가해야 한다. <strong>압력솥 대체:</strong> 고압 1시간 30분. <strong>슬로우쿠커:</strong> LOW 8시간 / HIGH 4시간.</p>
+  </div>
+
+</div>
+<div class="rb-side" style="background:#f0ece0">
+  <div class="sb">
+    <div class="sb-ttl" style="color:var(--c2);border-color:rgba(26,92,48,.25)">재료 구입처</div>
+    <div class="buy"><div class="buy-i">🥩</div><div><span class="buy-b">소 볼살</span><span class="buy-s">대형마트 정육 "볼살/뺨살". 없으면 우둔살·사태.</span></div></div>
+    <div class="buy"><div class="buy-i">🌶</div><div><span class="buy-b">치폴레 인 아도보</span><span class="buy-s">이마트·홈플러스 수입식품 / 쿠팡 "치폴레 아도보" — La Costeña 브랜드.</span></div></div>
+    <div class="buy"><div class="buy-i">🌶</div><div><span class="buy-b">안초 칠레</span><span class="buy-s">온라인 수입몰. 없으면 훈제 파프리카 가루.</span></div></div>
+    <div class="buy"><div class="buy-i">🫓</div><div><span class="buy-b">토르티야</span><span class="buy-s">대형마트 냉장·냉동 코너.</span></div></div>
+  </div>
+  <div class="sb">
+    <div class="sb-ttl" style="color:var(--c2);border-color:rgba(26,92,48,.25)">맵기 조절 (치폴레 캔 사용 개수)</div>
+    <div class="heat-bar">
+      <div class="heat-row"><span style="min-width:62px">1개</span><div class="heat-track"><div class="heat-fill" style="width:20%;background:var(--c2)"></div></div><span style="margin-left:.4rem">순함</span></div>
+      <div class="heat-row"><span style="min-width:62px">2개</span><div class="heat-track"><div class="heat-fill" style="width:45%;background:var(--c2)"></div></div><span style="margin-left:.4rem">중간</span></div>
+      <div class="heat-row"><span style="min-width:62px">3개</span><div class="heat-track"><div class="heat-fill" style="width:72%;background:var(--c2l)"></div></div><span style="margin-left:.4rem">매운 편</span></div>
+      <div class="heat-row"><span style="min-width:62px">4개</span><div class="heat-track"><div class="heat-fill" style="width:96%;background:#a82810"></div></div><span style="margin-left:.4rem">꽤 매움</span></div>
+    </div>
+  </div>
+  <div class="sb">
+    <div class="sb-ttl" style="color:var(--c2);border-color:rgba(26,92,48,.25)">대체 조리기구</div>
+    <p class="sb-text"><strong>오븐:</strong> 160℃ / 4~4.5시간<br><strong>압력솥:</strong> 고압 1.5시간<br><strong>슬로우쿠커:</strong> LOW 8h / HIGH 4h</p>
+  </div>
+  <div class="sb">
+    <div class="sb-ttl" style="color:var(--c2);border-color:rgba(26,92,48,.25)">보관 & 활용</div>
+    <p class="sb-text"><strong>냉장</strong> 3일 / <strong>냉동</strong> 1개월<br><br>남은 바르바코아:<br>· 볶음밥<br>· 퀘사디아 속<br>· 나초 토핑<br>· 계란과 브런치</p>
+  </div>
+  <div class="sb">
+    <div class="srv" style="background:#0d2e18">
+      <div class="srv-ttl" style="color:var(--c2l)">타코 조립 순서</div>
+      <div class="srv-item"><div class="srv-n">1</div>토르티야 2장 겹치기</div>
+      <div class="srv-item"><div class="srv-n">2</div>바르바코아 듬뿍</div>
+      <div class="srv-item"><div class="srv-n">3</div>다진 양파</div>
+      <div class="srv-item"><div class="srv-n">4</div>신선한 고수</div>
+      <div class="srv-item"><div class="srv-n">5</div>살사 베르데</div>
+      <div class="srv-item"><div class="srv-n">6</div>라임 듬뿍 ← 필수</div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="sf-l">육류를 활용한 요리 — 김미랑</div>
+  <div class="sf-r">출처: FAO (2009) Livestock in the Balance · Davidson (1999) Oxford Companion to Food · CONACULTA (2000) Enciclopedia Gastronómica de México · Coe (1994) America's First Cuisines</div>
+</footer>
+
+</body>
+</html>
